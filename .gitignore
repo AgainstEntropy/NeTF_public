@@ -13,3 +13,7 @@ volumeregressionmodel/*
 image_regression_model/*
 *.mat
 *.hdf5
+
+.idea/
+*.zip
+my_files/

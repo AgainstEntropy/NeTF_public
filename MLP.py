@@ -1,6 +1,7 @@
 import torch
 import time
 
+
 class Network_S_Relu(torch.nn.Module):
     def __init__(self, D=8, H=256, input_ch=3, input_ch_views=3, output_ch=4, skips=[4], no_rho=False):
         super(Network_S_Relu, self).__init__()
@@ -9,14 +10,16 @@ class Network_S_Relu(torch.nn.Module):
         self.skips = skips
         self.no_rho = no_rho
         self.pts_linears = torch.nn.ModuleList(
-            [torch.nn.Linear(input_ch, H)] + [torch.nn.Linear(H, H) if i not in self.skips else torch.nn.Linear(H + input_ch, H) for i in range(D-1)])
-        self.views_linears = torch.nn.ModuleList([torch.nn.Linear(input_ch_views + H, H//2)])
+            [torch.nn.Linear(input_ch, H)] + [
+                torch.nn.Linear(H, H) if i not in self.skips else torch.nn.Linear(H + input_ch, H) for i in
+                range(D - 1)])
+        self.views_linears = torch.nn.ModuleList([torch.nn.Linear(input_ch_views + H, H // 2)])
         if self.no_rho:
             self.output_linear = torch.nn.Linear(H, output_ch)
         else:
             self.feature_linear = torch.nn.Linear(H, H)
             self.alpha_linear = torch.nn.Linear(H, 1)
-            self.rho_linear = torch.nn.Linear(H//2, 1)
+            self.rho_linear = torch.nn.Linear(H // 2, 1)
 
     def forward(self, x):
         # y_pred = self.linear(x)
