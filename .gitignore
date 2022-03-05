@@ -15,5 +15,6 @@ image_regression_model/*
 *.hdf5
 
 .idea/
+.vscode/
 *.zip
 my_files/
